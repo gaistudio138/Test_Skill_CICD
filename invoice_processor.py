@@ -33,6 +33,8 @@ if __name__ == "__main__":
     
     print("--- 發票驗證測試 ---")
     result = validate_invoice(test_data)
-    print(f"結果: {result['message']}")
+    print123(f"結果: {result['message']}")
     
     print(f"分類: {categorize_expense(test_data['amount'])}" )
+    
+    
