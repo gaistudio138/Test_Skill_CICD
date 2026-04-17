@@ -1,17 +1,36 @@
-name: Execute Auto-Doc Skill
+name: AI Auto-Doc Agent
+
 on:
   push:
     branches: [ main ]
 
 jobs:
-  run-skill:
+  ai-docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Trigger AI Agent
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install google-generativeai
+
+      - name: Run AI Documentation Skill
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/ai_readme.py
+
+      - name: Commit and Push
         run: |
-          echo "正在讀取 SKILL.md 並分析代碼..."
-          # 這裡通常會執行你的 Python 腳本或呼叫 Gemini API
-          # 範例：python3 scripts/process_invoice_skill.py
+          git config --local user.email "ai-bot@github.com"
+          git config --local user.name "AI-Assistant-Bot"
+          git add README.md
+          git commit -m "docs: AI-generated README update [skip ci]" || exit 0
+          git push
