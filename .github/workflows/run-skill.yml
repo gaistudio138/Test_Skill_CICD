@@ -1,0 +1,17 @@
+name: Execute Auto-Doc Skill
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  run-skill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger AI Agent
+        run: |
+          echo "正在讀取 SKILL.md 並分析代碼..."
+          # 這裡通常會執行你的 Python 腳本或呼叫 Gemini API
+          # 範例：python3 scripts/process_invoice_skill.py
