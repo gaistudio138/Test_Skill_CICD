@@ -35,6 +35,11 @@ if __name__ == "__main__":
     result = validate_invoice(test_data)
     print(f"結果: {result['message']}")
     
-    print(f"分類: {categorize_expense(test_data['amount'])}" )
+    category = categorize_expense(test_data['amount'])
+    print(f"分類: {category}")
+    
+    # 高額警報檢查 (金額 > 10000)
+    if test_data['amount'] > 10000:
+        print("【高額警報】此筆支出超過 NT$10,000，需主管審核")
     
     
