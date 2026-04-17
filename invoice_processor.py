@@ -29,11 +29,11 @@ def categorize_expense(amount):
 
 if __name__ == "__main__":
     # 模擬測試資料
-    test_data = {"date": "2026-04-17", "amount": 1200, "tax_id": "12345678"}
+    test_data = {"date": "2026-04-17", "amount": 12000, "tax_id": "12345678"}
     
     print("--- 發票驗證測試 ---")
     result = validate_invoice(test_data)
-    print123(f"結果: {result['message']}")
+    print(f"結果: {result['message']}")
     
     print(f"分類: {categorize_expense(test_data['amount'])}" )
     
