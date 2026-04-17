@@ -9,7 +9,8 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 with open("invoice_processor.py", "r", encoding="utf-8") as f:
     code_content = f.read()
 
-with open(".github/skills/invoice-helper/SKILL.md", "r", encoding="utf-8") as f:
+with open(".github/skills/auto-doc/SKILL.md", "r", encoding="utf-8") as f:
+    
     skill_content = f.read()
 
 # 3. 設計給 AI 的 Prompt
