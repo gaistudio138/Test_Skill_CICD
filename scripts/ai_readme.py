@@ -5,8 +5,8 @@ import time
 
 # 1. 初始化 Client (使用最新 SDK 語法)
 
-GEMINI_API_KEY = "AIzaSyBeSESLH1osZNR0MBFqzjtZMYzRoghu3sI"
-# client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 # client = genai.Client(api_key=GEMINI_API_KEY)
 client = genai.Client(
     api_key=os.environ.get("GEMINI_API_KEY")
@@ -36,7 +36,6 @@ prompt = f"""
 {skill_content}
 """
 
-<<<<<<< HEAD
 
 
 # 4. 使用最新模型名稱與方法
@@ -65,25 +64,3 @@ for i in range(3):  # 最多重試 3 次
 
 
 print("AI 已成功透過新版 SDK 更新 README.md")
-=======
-# 4. 使用最新模型名稱與方法
-response = client.models.generate_content(
-    model='gemini-1.5-flash',  # 2026 年建議使用 2.0 版本，或維持 1.5-flash 但語法需正確
-    contents=prompt
-)
-
-# 建議改用 1.5-flash，並加上簡單的錯誤處理
-try:
-    response = client.models.generate_content(
-        model='gemini-1.5-flash', # 修改這裡
-        contents=prompt
-    )
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(response.text)
-    print("AI 已成功透過 1.5-flash 更新 README.md")
-except Exception as e:
-    print(f"呼叫 API 失敗: {e}")
-    # 如果失敗，建立一個基礎的 README 避免 Action 報錯
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write("# Project\nAI 更新暫時不可用，請檢查 Quota。")
->>>>>>> 81d1a0ce3e02ad8aeca348285353abf16ca546cd
