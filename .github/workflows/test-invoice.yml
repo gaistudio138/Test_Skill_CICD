@@ -14,7 +14,7 @@ jobs:
 
     steps:
       # 1. 將你的程式碼從 GitHub 倉庫下載到虛擬機
-      - name: Checkout code
+      - name: Checkout codeg
         uses: actions/checkout@v4
 
       # 2. 安裝 Python 環境

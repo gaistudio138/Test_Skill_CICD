@@ -1,8 +1,21 @@
 import os
 from google import genai
+from google.genai import errors
+import time
 
 # 1. 初始化 Client (使用最新 SDK 語法)
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
+GEMINI_API_KEY = "AIzaSyBeSESLH1osZNR0MBFqzjtZMYzRoghu3sI"
+# client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+# client = genai.Client(api_key=GEMINI_API_KEY)
+client = genai.Client(
+    api_key=os.environ.get("GEMINI_API_KEY")
+    
+)
+# for m in client.models.list():
+#     print(m.name)
+
+
 
 # 2. 讀取專案檔案 (路徑請確保正確)
 try:
@@ -23,13 +36,31 @@ prompt = f"""
 {skill_content}
 """
 
-# 4. 使用最新模型名稱與方法
-response = client.models.generate_content(
-    model='gemini-2.0-flash',  # 2026 年建議使用 2.0 版本，或維持 1.5-flash 但語法需正確
-    contents=prompt
-)
 
-with open("README.md", "w", encoding="utf-8") as f:
-    f.write(response.text)
+
+# 4. 使用最新模型名稱與方法
+for i in range(3):  # 最多重試 3 次
+    try:
+        response = client.models.generate_content(
+        # model='models/gemini-2.5-flash', 
+        model='models/gemini-2.5-flash-lite',
+        contents=prompt
+    )
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write(response.text)
+        print("AI 已成功更新 README.md")
+        break
+    except errors.ClientError as e:
+        if "429" in str(e):
+            print(f"API 限流錯誤: {e}")
+            print(f"觸發限流，等待 30 秒後進行第 {i+1} 次重試...")
+            time.sleep(30)
+        else:
+            print(f"發生錯誤: {e}")
+            raise e
+        
+
+
+
 
 print("AI 已成功透過新版 SDK 更新 README.md")
